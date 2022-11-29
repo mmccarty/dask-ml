@@ -4,7 +4,7 @@ Incremental Learning
 ====================
 
 Some estimators can be trained incrementally -- without seeing the entire
-dataset at once. Scikit-Learn provdes the ``partial_fit`` API to stream batches
+dataset at once. Scikit-Learn provides the ``partial_fit`` API to stream batches
 of data to an estimator that can be fit in batches.
 
 Normally, if you pass a Dask Array to an estimator expecting a NumPy array,
@@ -19,11 +19,11 @@ block of a Dask Array to the underlying estimator's ``partial_fit`` method.
 
 .. note::
 
-   :class:`dask_ml.wrappers.Incremetnal` currently does not work well with
+   :class:`dask_ml.wrappers.Incremental` currently does not work well with
    hyper-parameter optimization like :class:`sklearn.model_selection.GridSearchCV`.
    If you need to do hyper-parameter optimization on larger-than-memory datasets,
-   we recommend :class:`dask_ml.model_selection.IncrementalSearch`. See
-   :ref:`hyperparameter.incremental` for an introduction.
+   we recommend :class:`dask_ml.model_selection.IncrementalSearchCV`. See
+   ":ref:`hyperparameter.incremental`" for an introduction.
 
 .. _incremental.blockwise-metaestimator:
 
@@ -39,7 +39,7 @@ Incremental Meta-estimator
 takes another estimator) that bridges scikit-learn estimators expecting
 NumPy arrays, and users with large Dask Arrays.
 
-Each *block* of a Dask Array is fed to the underlying estiamtor's
+Each *block* of a Dask Array is fed to the underlying estimator's
 ``partial_fit`` method. The training is entirely sequential, so you won't
 notice massive training time speedups from parallelism. In a distributed
 environment, you should notice some speedup from avoiding extra IO, and the
@@ -48,6 +48,7 @@ between machines.
 
 
 .. ipython:: python
+   :okwarning:
 
    from dask_ml.datasets import make_classification
    from dask_ml.wrappers import Incremental
@@ -74,7 +75,7 @@ for you.
 
 Just like :meth:`sklearn.linear_model.SGDClassifier.partial_fit`, we need to
 pass the ``classes`` argument to ``fit``. In general, any argument that is
-required for the underlying estimators ``parital_fit`` becomes required for
+required for the underlying estimators ``partial_fit`` becomes required for
 the wrapped ``fit``.
 
 
@@ -95,7 +96,7 @@ We can get the accuracy score on our dataset.
 
    clf.score(X, y)
 
-All of the attributes learned durning training, like ``coef_``, are available
+All of the attributes learned during training, like ``coef_``, are available
 on the ``Incremental`` instance.
 
 .. ipython:: python
@@ -113,5 +114,5 @@ If necessary, the actual estimator trained is available as ``Incremental.estimat
 Incremental Learning and Hyper-parameter Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-See :ref:`hyperparameter.incremental` for more on how to do hyperparameter optimization on
+See ":ref:`hyperparameter.incremental`" for more on how to do hyperparameter optimization on
 larger than memory datasets.
