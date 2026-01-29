@@ -817,9 +817,9 @@ unit variance scaling.</p>
 <p><cite>MinMaxScaler</cite> doesn’t reduce the effect of outliers, but it linearly
 scales them down into a fixed range, where the largest occurring data point
 corresponds to the maximum value and the smallest one corresponds to the
-minimum value. For an example visualization, refer to <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#plot-all-scaling-minmax-scaler-section" title="(in scikit-learn v1.6)"><span class="xref std std-ref">Compare
+minimum value. For an example visualization, refer to <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#plot-all-scaling-minmax-scaler-section" title="(in scikit-learn v1.8)"><span class="xref std std-ref">Compare
 MinMaxScaler with other scalers</span></a>.</p>
-<p>Read more in the <a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#preprocessing-scaler" title="(in scikit-learn v1.6)"><span class="xref std std-ref">User Guide</span></a>.</p>
+<p>Read more in the <a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#preprocessing-scaler" title="(in scikit-learn v1.8)"><span class="xref std std-ref">User Guide</span></a>.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -829,7 +829,17 @@ MinMaxScaler with other scalers</span></a>.</p>
 copy (if the input is already a numpy array).</p>
 </dd>
 <dt><strong>clip</strong><span class="classifier">bool, default=False</span></dt><dd><p>Set to True to clip transformed values of held-out data to
-provided <cite>feature range</cite>.</p>
+provided <cite>feature_range</cite>.
+Since this parameter will clip values, <cite>inverse_transform</cite> may not
+be able to restore the original data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Setting <cite>clip=True</cite> does not prevent feature drift (a distribution
+shift between training and test data). The transformed values are clipped
+to the <cite>feature_range</cite>, which helps avoid unintended behavior in models
+sensitive to out-of-range inputs (e.g. linear models). Use with care,
+as clipping can distort the distribution of test data.</p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.24.</span></p>
 </div>
@@ -862,7 +872,7 @@ provided <cite>feature range</cite>.</p>
 <p><span class="versionmodified added">New in version 0.17: </span><em>data_range_</em></p>
 </div>
 </dd>
-<dt><strong>n_features_in_</strong><span class="classifier">int</span></dt><dd><p>Number of features seen during <a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-fit" title="(in scikit-learn v1.6)"><span class="xref std std-term">fit</span></a>.</p>
+<dt><strong>n_features_in_</strong><span class="classifier">int</span></dt><dd><p>Number of features seen during <a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-fit" title="(in scikit-learn v1.8)"><span class="xref std std-term">fit</span></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.24.</span></p>
 </div>
@@ -871,7 +881,7 @@ provided <cite>feature range</cite>.</p>
 It will be reset on new calls to fit, but increments across
 <code class="docutils literal notranslate"><span class="pre">partial_fit</span></code> calls.</p>
 </dd>
-<dt><strong>feature_names_in_</strong><span class="classifier">ndarray of shape (<cite>n_features_in_</cite>,)</span></dt><dd><p>Names of features seen during <a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-fit" title="(in scikit-learn v1.6)"><span class="xref std std-term">fit</span></a>. Defined only when <cite>X</cite>
+<dt><strong>feature_names_in_</strong><span class="classifier">ndarray of shape (<cite>n_features_in_</cite>,)</span></dt><dd><p>Names of features seen during <a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-fit" title="(in scikit-learn v1.8)"><span class="xref std std-term">fit</span></a>. Defined only when <cite>X</cite>
 has feature names that are all strings.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.0.</span></p>
@@ -936,7 +946,7 @@ transform.</p>
 <td><p>Online computation of min and max on X for later scaling.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_inverse_transform_request</span></code>(*[, copy])</p></td>
-<td><p>Request metadata passed to the <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> method.</p></td>
+<td><p>Configure whether metadata should be requested to be passed to the <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> method.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_output</span></code>(*[, transform])</p></td>
 <td><p>Set output container.</p></td>
@@ -945,7 +955,7 @@ transform.</p>
 <td><p>Set the parameters of this estimator.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_transform_request</span></code>(*[, copy])</p></td>
-<td><p>Request metadata passed to the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method.</p></td>
+<td><p>Configure whether metadata should be requested to be passed to the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code>(X[, y, copy])</p></td>
 <td><p>Scale features of X according to feature_range.</p></td>
